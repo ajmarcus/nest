@@ -2,7 +2,7 @@ use dw;
 
 insert overwrite table dw.fact_nest
     select type
-        ,average_stars
+        ,average_stars*10000
         ,business_id
         ,categories
         ,city
