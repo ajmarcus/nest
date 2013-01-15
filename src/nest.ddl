@@ -1,4 +1,3 @@
--- configuration
 set hive.cli.print.current.db=true;
 set hive.cli.print.header=true;
 set hive.optimize.s3.query=true;
@@ -22,7 +21,7 @@ create table if not exists dw.fact_nest
       business_id STRING comment 'Unique identifier for the business',
       categories STRING comment 'Array of localized category names',
       city STRING comment 'Location of business',
-      date STRING comment 'Date of review in YYYY-MM-DD format',
+      date_time STRING comment 'Date of review in YYYY-MM-DD format',
       full_address STRING comment 'Localized address',
       latitude STRING comment 'Location of business',
       longitude STRING comment 'Location of business',
@@ -31,14 +30,12 @@ create table if not exists dw.fact_nest
       open STRING comment 'Whether the business is still open',
       photo_url STRING comment 'URL of business photo',
       review_count STRING comment 'Number of reviews of the business',
-      review_id STRING commment 'Unique identifier for a review',
+      review_id STRING comment 'Unique identifier for a review',
       schools STRING comment 'Array of nearby universities',
       stars INT comment 'Star rating of review',
       state STRING comment 'Location of business',
       text STRING comment 'Review text',
       url STRING comment 'Yelp URL for a business',
       user_id STRING comment 'Unique identifier for a user',
-      votes_useful INT comment 'Count of useful votes for a review',
-      votes_funny INT comment 'Count of funny votes for a review',
-      votes_cool INT comment 'Count of cool votes for a review' )
+      votes STRING comment 'Object with counts of useful, funny and cool reviews' )
 stored as sequencefile;
