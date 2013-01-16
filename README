@@ -3,6 +3,12 @@ Nest
 
 A demo of hive's capabilities.
 
+### Configuration ###
+
+Put the following variables in your kettle.properties file:
+LAPPY_AWS_PUB_KEY=[PUBLIC KEY]
+LAPPY_AWS_PRV_KEY=[PRIVATE KEY]
+
 ### Sample EMR cli commands ###
 
 1. List active jobflows
