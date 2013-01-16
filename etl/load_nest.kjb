@@ -85,10 +85,10 @@
       <secret_key>${LAPPY_AWS_PRV_KEY}</secret_key>
       <bootstrap_actions/>
       <staging_dir>s3:&#47;&#47;nest.hive&#47;logs</staging_dir>
-      <num_instances>3</num_instances>
-      <master_instance_type>Large [m1.large]</master_instance_type>
-      <slave_instance_type>Large [m1.large]</slave_instance_type>
-      <command_line_args>-i s3:&#47;&#47;nest.hive&#47;src&#47;nest.ddl</command_line_args>
+      <num_instances>2</num_instances>
+      <master_instance_type>Small [m1.small]</master_instance_type>
+      <slave_instance_type>Small [m1.small]</slave_instance_type>
+      <command_line_args>&apos;-i&apos;,&apos;s3:&#47;&#47;nest.hive&#47;src&#47;nest.ddl&apos;</command_line_args>
       <alive>N</alive>
       <blocking>Y</blocking>
       <logging_interval>60</logging_interval>
