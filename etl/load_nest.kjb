@@ -88,7 +88,7 @@
       <num_instances>2</num_instances>
       <master_instance_type>Small [m1.small]</master_instance_type>
       <slave_instance_type>Small [m1.small]</slave_instance_type>
-      <command_line_args/>
+      <command_line_args> </command_line_args>
       <alive>N</alive>
       <blocking>Y</blocking>
       <logging_interval>60</logging_interval>
@@ -97,7 +97,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>243</xloc>
-      <yloc>200</yloc>
+      <yloc>199</yloc>
       </entry>
     <entry>
       <name>START</name>
