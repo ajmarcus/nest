@@ -88,7 +88,7 @@
       <num_instances>2</num_instances>
       <master_instance_type>Small [m1.small]</master_instance_type>
       <slave_instance_type>Small [m1.small]</slave_instance_type>
-      <command_line_args>&apos;-i&apos;,&apos;s3:&#47;&#47;nest.hive&#47;src&#47;nest.ddl&apos;</command_line_args>
+      <command_line_args/>
       <alive>N</alive>
       <blocking>Y</blocking>
       <logging_interval>60</logging_interval>
