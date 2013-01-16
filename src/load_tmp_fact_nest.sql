@@ -1,6 +1,6 @@
 use dw;
 
-insert overwrite table dw.fact_nest
+insert overwrite table dw.tmp_fact_nest
     select type
         ,average_stars*10000
         ,business_id
@@ -19,7 +19,7 @@ insert overwrite table dw.fact_nest
         ,schools
         ,stars
         ,state
-        ,text
+        ,review_text
         ,url
         ,user_id
         ,votes
@@ -64,7 +64,7 @@ insert overwrite table dw.fact_nest
         ,schools
         ,stars
         ,state
-        ,text
+        ,review_text
         ,url
         ,user_id
         ,votes;
