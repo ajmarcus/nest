@@ -85,3 +85,35 @@ create table if not exists dw.fact_review
     votes_funny STRING comment 'count of funny votes',
     votes_cool STRING comment 'count of cool votes' )
 stored as sequencefile;
+
+
+create table if not exists dw.fact_review_denorm 
+    ( business_id STRING comment 'the identifier of the reviewed business',
+    user_id STRING comment 'the identifier of the authoring user',
+    review_stars INT comment 'star rating, integer 1-5',
+    review_text STRING comment 'review text',
+    review_day_date STRING comment 'date formatted YYYY-MM-DD ',
+    review_votes_useful STRING comment 'count of useful votes',
+    review_votes_funny STRING comment 'count of funny votes',
+    review_votes_cool STRING comment 'count of cool votes',
+    user_name STRING comment 'first name and last initial of user',
+    user_review_count STRING comment 'review count',
+    user_average_stars INT comment 'average stars multiplied by 10,000',
+    user_votes_useful STRING comment 'count of useful votes across all reviews',
+    user_votes_funny STRING comment 'count of funny votes across all reviews',
+    user_votes_cool STRING comment 'count of cool votes across all reviews',
+    business_name STRING comment 'the full business name',
+    business_neighborhoods STRING comment 'a list of neighborhood names, might be empty',
+    business_full_address STRING comment 'localized address',
+    business_city STRING comment 'city',
+    business_state STRING comment 'state',
+    business_latitude STRING comment 'latitude',
+    business_longitude STRING comment 'longitude',
+    business_stars STRING comment 'star rating, rounded to half-stars',
+    business_review_count STRING comment 'review count',
+    business_photo_url STRING comment 'photo url',
+    business_categories STRING comment 'Array of localized category names',
+    business_open STRING comment 'is the business still open for business?',
+    business_schools STRING comment 'nearby universities',
+    business_url STRING comment 'yelp url' )
+stored as sequencefile;

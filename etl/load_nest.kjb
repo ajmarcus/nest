@@ -80,7 +80,7 @@
       <type>HiveJobExecutorPlugin</type>
       <hadoop_job_name>Load Nest</hadoop_job_name>
       <hadoop_job_flow_id/>
-      <q_url>s3:&#47;&#47;nest.hive&#47;src&#47;load_nest.sql</q_url>
+      <q_url>s3:&#47;&#47;nest.hive&#47;src&#47;nest.ddl</q_url>
       <access_key>${LAPPY_AWS_PUB_KEY}</access_key>
       <secret_key>${LAPPY_AWS_PRV_KEY}</secret_key>
       <bootstrap_actions/>

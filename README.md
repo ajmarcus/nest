@@ -6,11 +6,10 @@ A demo of hive's capabilities.
 ### Configuration ###
 
 Put the following variables in your kettle.properties file:
-LAPPY_AWS_PUB_KEY=$PUBLIC KEY
-LAPPY_AWS_PRV_KEY=$PRIVATE KEY
+*LAPPY_AWS_PUB_KEY=$PUBLIC KEY
+*LAPPY_AWS_PRV_KEY=$PRIVATE KEY
 
-
-Download 
+Download the [elastic mapreduce](http://docs.aws.amazon.com/ElasticMapReduce/latest/GettingStartedGuide/SignUp.html#emr-gsg-install-cli) ruby client and change nest/bin/start-hive.sh to point to that directory.
 
 ### Sample EMR cli commands ###
 
