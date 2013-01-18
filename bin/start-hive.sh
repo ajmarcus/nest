@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Change this to point to your downloaded copy of the ruby elastic-mapreduce client
 lappy_emr='/home/openbi/emr/elastic-mapreduce-cli/elastic-mapreduce -c /home/openbi/.emr/lappy.json'
 
 $lappy_emr --create --alive --hive-interactive \
@@ -8,5 +9,5 @@ $lappy_emr --create --alive --hive-interactive \
   --instance-type m2.xlarge \
   --instance-group core --instance-type m2.xlarge \
   --instance-count 1 \
-  --jar s3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar \
-  --args "s3://nest.hive/src/hive_init.sh"
+  --hive-script "s3://nest.hive/src/nest.ddl" \
+  --step-name "Run Nest ddl"
