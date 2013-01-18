@@ -57,3 +57,9 @@ ERROR 15-01 23:05:51,014 - Load Nest - Status Code: 404, AWS Request ID: C09F4AE
   at org.pentaho.di.job.Job.execute(Job.java:728)
   at org.pentaho.di.job.Job.execute(Job.java:443)
   at org.pentaho.di.job.Job.run(Job.java:363)
+
+3. Null command line argument when deleted
+
+Downloading 's3://elasticmapreduce/libs/hive/hive-script' to '/mnt/var/lib/hadoop/steps/2/.'
+2013-01-16 04:16:50 GMT - INFO Running: /home/hadoop/.versions/hive-0.7/bin/hive '-f' 's3://nest.hive/src/load_nest.sql' 'null'
+2013-01-16 04:16:53 GMT - ERROR Error executing cmd: /home/hadoop/.versions/hive-0.7/bin/hive '-f' 's3://nest.hive/src/load_nest.sql' 'null'
