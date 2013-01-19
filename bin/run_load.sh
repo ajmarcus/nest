@@ -10,4 +10,10 @@ $lappy_emr --create --alive --hive-interactive \
   --instance-group core --instance-type m2.xlarge \
   --instance-count 1 \
   --hive-script "s3://nest.hive/src/jive.ddl" \
-  --step-name "Run Jive ddl"
+  --step-name "Run jive ddl" \
+  --hive-script "s3://nest.hive/src/load_tmp_fact_yelp.sql" \
+  --step-name "Parse yelp json" \
+  --hive-script "s3://nest.hive/src/load_dims.sql" \
+  --step-name "Load dimensions" \
+  --hive-script "s3://nest.hive/src/load_facts.sql" \
+  --step-name "Load facts"

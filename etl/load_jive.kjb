@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>load_nest</name>
+  <name>load_jive</name>
     <description/>
     <extended_description/>
     <job_version/>
+    <job_status>0</job_status>
   <directory>&#47;</directory>
   <created_user>-</created_user>
   <created_date>2013&#47;01&#47;15 22:31:05.583</created_date>
@@ -75,12 +76,12 @@
    <shared_objects_file/>
   <entries>
     <entry>
-      <name>Load Nest</name>
+      <name>Load jive</name>
       <description/>
       <type>HiveJobExecutorPlugin</type>
-      <hadoop_job_name>Load Nest</hadoop_job_name>
+      <hadoop_job_name>Load jive</hadoop_job_name>
       <hadoop_job_flow_id/>
-      <q_url>s3:&#47;&#47;nest.hive&#47;src&#47;nest.ddl</q_url>
+      <q_url>s3:&#47;&#47;nest.hive&#47;src&#47;jive.ddl</q_url>
       <access_key>${LAPPY_AWS_PUB_KEY}</access_key>
       <secret_key>${LAPPY_AWS_PRV_KEY}</secret_key>
       <bootstrap_actions/>
@@ -92,12 +93,12 @@
       <alive>N</alive>
       <blocking>Y</blocking>
       <logging_interval>60</logging_interval>
-      <hadoop_job_name>Load Nest</hadoop_job_name>
+      <hadoop_job_name>Load jive</hadoop_job_name>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>243</xloc>
-      <yloc>199</yloc>
+      <xloc>281</xloc>
+      <yloc>281</yloc>
       </entry>
     <entry>
       <name>START</name>
@@ -116,8 +117,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>143</xloc>
-      <yloc>200</yloc>
+      <xloc>62</xloc>
+      <yloc>173</yloc>
       </entry>
     <entry>
       <name>Success</name>
@@ -126,14 +127,71 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>336</xloc>
-      <yloc>201</yloc>
+      <xloc>393</xloc>
+      <yloc>183</yloc>
+      </entry>
+    <entry>
+      <name>Copy yelp file to s3</name>
+      <description/>
+      <type>HadoopCopyFilesPlugin</type>
+      <copy_empty_folders>Y</copy_empty_folders>
+      <arg_from_previous>N</arg_from_previous>
+      <overwrite_files>Y</overwrite_files>
+      <include_subfolders>N</include_subfolders>
+      <remove_source_files>N</remove_source_files>
+      <add_result_filesname>N</add_result_filesname>
+      <destination_is_a_file>Y</destination_is_a_file>
+      <create_destination_folder>Y</create_destination_folder>
+      <fields>
+        <field>
+          <source_filefolder>${Internal.Job.Filename.Directory}&#47;..&#47;data&#47;yelp_academic_dataset.json.bz2</source_filefolder>
+          <destination_filefolder>s3:&#47;&#47;${LAPPY_AWS_PUB_KEY}:${LAPPY_AWS_PRV_KEY}@s3&#47;nest.hive&#47;raw&#47;yelp_academic_dataset.json.bz2</destination_filefolder>
+          <wildcard/>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>163</xloc>
+      <yloc>175</yloc>
+      </entry>
+    <entry>
+      <name>Run load</name>
+      <description/>
+      <type>SHELL</type>
+      <filename>${Internal.Job.Filename.Directory}&#47;..&#47;bin&#47;run_load.sh</filename>
+      <work_directory>&#47;tmp&#47;</work_directory>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <set_append_logfile>N</set_append_logfile>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <insertScript>N</insertScript>
+      <script/>
+      <loglevel>Basic</loglevel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>281</xloc>
+      <yloc>179</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
+      <from>Load jive</from>
+      <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>N</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>START</from>
-      <to>Load Nest</to>
+      <to>Copy yelp file to s3</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -141,7 +199,25 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Load Nest</from>
+      <from>Copy yelp file to s3</from>
+      <to>Load jive</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>N</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Copy yelp file to s3</from>
+      <to>Run load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Run load</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -151,5 +227,60 @@
     </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>Load dw
+=======
+1. Copy raw data to s3
+2. Run load using hive scripts on emr</note>
+      <xloc>112</xloc>
+      <yloc>53</yloc>
+      <width>227</width>
+      <heigth>74</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>165</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+    <notepad>
+      <note>Hive EMR Step
+============
+Not ready for primetime. 
+
+Open Issues:
+
+1. PDI uses old version of Hive from 2011
+http:&#47;&#47;jira.pentaho.com&#47;browse&#47;PDI-9163
+
+2. PDI does not fail gracefully when JobFlow fails
+http:&#47;&#47;jira.pentaho.com&#47;browse&#47;PDI-9162</note>
+      <xloc>170</xloc>
+      <yloc>351</yloc>
+      <width>299</width>
+      <heigth>186</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>165</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>
