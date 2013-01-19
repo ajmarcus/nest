@@ -13,7 +13,7 @@ insert overwrite table dw.fact_review
         j.votes_useful,
         j.votes_funny,
         j.votes_cool
-    from tmp_fact_nest tmp
+    from tmp_fact_yelp tmp
     lateral view json_tuple(tmp.votes
         , 'useful'
         , 'funny'

@@ -2,7 +2,7 @@
 
 use dw;
 
-insert overwrite table dw.tmp_fact_nest
+insert overwrite table dw.tmp_fact_yelp
     select type
         ,average_stars*10000
         ,business_id
@@ -25,7 +25,7 @@ insert overwrite table dw.tmp_fact_nest
         ,url
         ,user_id
         ,votes
-    from dw.raw_nest raw
+    from dw.raw_yelp raw
     lateral view json_tuple(raw.row_json,'type'
     ,'average_stars'
     ,'business_id'

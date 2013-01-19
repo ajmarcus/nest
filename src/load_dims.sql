@@ -12,7 +12,7 @@ insert overwrite table dw.dim_user
         j.votes_useful,
         j.votes_funny,
         j.votes_cool
-    from tmp_fact_nest tmp
+    from tmp_fact_yelp tmp
     lateral view json_tuple(tmp.votes
         , 'useful'
         , 'funny'
@@ -41,5 +41,5 @@ insert overwrite table dw.dim_business
         tmp.open,
         tmp.schools,
         tmp.url
-    from tmp_fact_nest tmp
+    from tmp_fact_yelp tmp
     where tmp.type='business';

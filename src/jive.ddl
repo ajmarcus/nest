@@ -11,13 +11,13 @@ use dw;
 
 -- tmp tables
 
-create external table if not exists dw.raw_nest
+create external table if not exists dw.raw_yelp
     ( row_json STRING )
 row format delimited
 lines terminated by '\n'
 location 's3://nest.hive/raw/';
 
-create table if not exists dw.tmp_fact_nest
+create table if not exists dw.tmp_fact_yelp
     ( type STRING comment 'Indicates whether the row is a business, review or user',
     average_stars INT comment 'Average Stars multiplied by 10,000',
     business_id STRING comment 'Unique identifier for the business',
@@ -117,3 +117,39 @@ create table if not exists dw.fact_review_denorm
     business_schools STRING comment 'nearby universities',
     business_url STRING comment 'yelp url' )
 stored as sequencefile;
+
+-- extract table
+
+create table if not exists dw.extract_review_denorm 
+    ( business_id STRING comment 'the identifier of the reviewed business',
+    user_id STRING comment 'the identifier of the authoring user',
+    review_stars INT comment 'star rating, integer 1-5',
+    review_text STRING comment 'review text',
+    review_day_date STRING comment 'date formatted YYYY-MM-DD ',
+    review_votes_useful STRING comment 'count of useful votes',
+    review_votes_funny STRING comment 'count of funny votes',
+    review_votes_cool STRING comment 'count of cool votes',
+    user_name STRING comment 'first name and last initial of user',
+    user_review_count STRING comment 'review count',
+    user_average_stars INT comment 'average stars multiplied by 10,000',
+    user_votes_useful STRING comment 'count of useful votes across all reviews',
+    user_votes_funny STRING comment 'count of funny votes across all reviews',
+    user_votes_cool STRING comment 'count of cool votes across all reviews',
+    business_name STRING comment 'the full business name',
+    business_neighborhoods STRING comment 'a list of neighborhood names, might be empty',
+    business_full_address STRING comment 'localized address',
+    business_city STRING comment 'city',
+    business_state STRING comment 'state',
+    business_latitude STRING comment 'latitude',
+    business_longitude STRING comment 'longitude',
+    business_stars STRING comment 'star rating, rounded to half-stars',
+    business_review_count STRING comment 'review count',
+    business_photo_url STRING comment 'photo url',
+    business_categories STRING comment 'Array of localized category names',
+    business_open STRING comment 'is the business still open for business?',
+    business_schools STRING comment 'nearby universities',
+    business_url STRING comment 'yelp url' )
+row format delimited
+fields terminated by '\t'
+lines terminated by '\n'
+stored as textfile;
