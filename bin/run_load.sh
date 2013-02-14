@@ -3,7 +3,7 @@
 # Change this to point to your downloaded copy of the ruby elastic-mapreduce client
 lappy_emr='/home/openbi/emr/elastic-mapreduce-cli/elastic-mapreduce -c /home/openbi/.emr/lappy.json'
 
-$lappy_emr --create --alive --hive-interactive \
+$lappy_emr --create \
   --name 'jitterbug' \
   --instance-group master --instance-count 1 \
   --instance-type m2.xlarge \

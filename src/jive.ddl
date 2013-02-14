@@ -4,20 +4,15 @@ set hive.optimize.s3.query=true;
 set mapred.map.output.compression.codec=org.apache.hadoop.io.compress.SnappyCodec;
 set hive.exec.compress.intermediate=true;
 
-create database if not exists dw
-    location 's3://nest.hive/dw';
-
-use dw;
-
 -- tmp tables
 
-create external table if not exists dw.raw_yelp
+create external table if not exists raw_yelp
     ( row_json STRING )
 row format delimited
 lines terminated by '\n'
 location 's3://nest.hive/raw/';
 
-create table if not exists dw.tmp_fact_yelp
+create table if not exists tmp_fact_yelp
     ( type STRING comment 'Indicates whether the row is a business, review or user',
     average_stars INT comment 'Average Stars multiplied by 10,000',
     business_id STRING comment 'Unique identifier for the business',
@@ -40,12 +35,13 @@ create table if not exists dw.tmp_fact_yelp
     url STRING comment 'Yelp URL for a business',
     user_id STRING comment 'Unique identifier for a user',
     votes STRING comment 'Object with counts of useful, funny and cool reviews' )
-stored as sequencefile;
+stored as sequencefile
+location 's3://nest.hive/dw/tmp_fact_yelp/';
 
 
 --dimensions
 
-create table if not exists dw.dim_business
+create table if not exists dim_business
     ( business_id STRING comment 'a unique identifier for this business',
     name STRING comment 'the full business name',
     neighborhoods STRING comment 'a list of neighborhood names, might be empty',
@@ -61,9 +57,10 @@ create table if not exists dw.dim_business
     open STRING comment 'is the business still open for business?',
     schools STRING comment 'nearby universities',
     url STRING comment 'yelp url' )
-stored as sequencefile;
+stored as sequencefile
+location 's3://nest.hive/dw/dim_business/';
 
-create table if not exists dw.dim_user
+create table if not exists dim_user
     ( user_id STRING comment 'unique user identifier',
     name STRING comment 'first name and last initial of user',
     review_count INT comment 'review count',
@@ -71,11 +68,12 @@ create table if not exists dw.dim_user
     votes_useful INT comment 'count of useful votes across all reviews',
     votes_funny INT comment 'count of funny votes across all reviews',
     votes_cool INT comment 'count of cool votes across all reviews' )
-stored as sequencefile;
+stored as sequencefile
+location 's3://nest.hive/dw/dim_user/';
 
 -- facts
 
-create table if not exists dw.fact_review 
+create table if not exists fact_review 
     ( business_id STRING comment 'the identifier of the reviewed business',
     user_id STRING comment 'the identifier of the authoring user',
     stars INT comment 'star rating, integer 1-5',
@@ -84,10 +82,11 @@ create table if not exists dw.fact_review
     votes_useful INT comment 'count of useful votes',
     votes_funny INT comment 'count of funny votes',
     votes_cool INT comment 'count of cool votes' )
-stored as sequencefile;
+stored as sequencefile
+location 's3://nest.hive/dw/fact_review/';
 
 
-create table if not exists dw.fact_review_denorm 
+create table if not exists fact_review_denorm 
     ( business_id STRING comment 'the identifier of the reviewed business',
     user_id STRING comment 'the identifier of the authoring user',
     review_stars INT comment 'star rating, integer 1-5',
@@ -116,11 +115,12 @@ create table if not exists dw.fact_review_denorm
     business_open STRING comment 'is the business still open for business?',
     business_schools STRING comment 'nearby universities',
     business_url STRING comment 'yelp url' )
-stored as sequencefile;
+stored as sequencefile
+location 's3://nest.hive/dw/fact_review_denorm/';
 
 -- extract table
 
-create table if not exists dw.extract_review_denorm 
+create table if not exists extract_review_denorm 
     ( business_id STRING comment 'the identifier of the reviewed business',
     user_id STRING comment 'the identifier of the authoring user',
     review_stars INT comment 'star rating, integer 1-5',
@@ -152,4 +152,5 @@ create table if not exists dw.extract_review_denorm
 row format delimited
 fields terminated by '\t'
 lines terminated by '\n'
-stored as textfile;
+stored as textfile
+location 's3://nest.hive/dw/extract_review_denorm/';
